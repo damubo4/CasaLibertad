@@ -1,0 +1,21 @@
+.color {
+  color:#9F2257;
+}
+
+button {
+  background-color: #9F2257;
+  color: white;
+}
+
+.is-valid {
+    border: 2px solid green;
+  }
+
+.is-invalid {
+    border: 2px solid red;
+}
+
+.validacion {
+  color: red;
+}
+

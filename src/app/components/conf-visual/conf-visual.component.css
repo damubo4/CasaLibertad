@@ -1,0 +1,15 @@
+.conf-visual {
+  background-color: #9F2257;
+  border-radius: 5px;
+  width: fit-content;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+li button {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+ }

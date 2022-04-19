@@ -1,0 +1,198 @@
+<div [style.font-size.vw]="escalaTexto" [style.color]="color">
+  <div class="px-4">
+    <form [formGroup]="myForm" (ngSubmit)="save()">
+
+      <div class="mb-4">
+
+        <h2 class="color text-center">REGISTRO DE VISITANTES CASA LIBERTAD</h2>
+        <p class="">¿Autoriza el tratamiento de sus datos personales conforme a la politica de Tratamiento
+          de Datos Personales de esta Secretaria?* El titular de los datos podrá, en cualquier momento, solicitar
+          que la información sea modificada, actualizada o retirada de las bases de datos de Casa Libertad.
+        </p>
+
+        <mat-radio-group aria-label="" formControlName="aut_datos">
+          <mat-radio-button class="me-2" value="1">Si</mat-radio-button>
+          <mat-radio-button value="2">No</mat-radio-button>
+        </mat-radio-group>
+
+          <div class="validacion">
+            <span *ngIf="myForm.get('aut_datos').errors?.pattern">
+              Debe marca la opcion Si para autorizar el tratamiento de datos
+            </span>
+          </div>
+        </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+
+          <div class="mb-4">
+            <label class="">Tipo de documento <strong>*</strong></label>
+            <div>
+              <select  formControlName="tipo_doc">
+                  <option *ngFor="let documento of tipoDocumento" [value]="documento.value">
+                    {{documento.tag}}
+                  </option>
+                </select>
+              </div>
+              <div class="validacion">
+                <span *ngIf="myForm.get('tipo_doc').errors?.required && myForm.get('tipo_doc').touched">
+                  Por favor seleccione un tipo de documento
+                </span>
+              </div>
+            </div>
+
+          <div class="mb-4">
+            <label class="">Primer apellido <strong>*</strong></label><br>
+            <input formControlName="primer_apellido" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('primer_apellido').errors?.required && myForm.get('primer_apellido').touched">
+                Por favor escriba el nombre
+              </span>
+              <span *ngIf="myForm.get('primer_apellido').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("primer_apellido").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="">Teléfono 2 del visitante</label><br>
+            <input formControlName="tel_cont_2" type="number">
+            <div class="validacion">
+              <span *ngIf="myForm.get('tel_cont_2').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("tel_cont_2").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="">¿Con cúal dimensión tiene cita/taller? <strong>*</strong></label>
+            <div>
+              <select formControlName="cita_taller">
+                  <option *ngFor="let cita of citaTaller" [value]="cita.value">
+                    {{cita.tag}}
+                  </option>
+                </select>
+                <div class="validacion">
+                  <span *ngIf="myForm.get('cita_taller').errors?.required && myForm.get('cita_taller').touched">
+                    Por favor seleccione un item
+                  </span>
+                </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-4">
+
+          <div class="mb-4">
+            <label class="">Número de documento <strong>*</strong></label><br>
+            <input formControlName="documento" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('documento').errors?.required && myForm.get('documento').touched">
+                Por favor escriba el numero de documento
+              </span>
+              <span *ngIf="myForm.get('documento').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("documento").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="">Segundo apellido</label><br>
+            <input formControlName="segundo_apellido" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('segundo_apellido').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("segundo_apellido").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="">Razón de visita <strong>*</strong></label>
+            <div>
+              <select formControlName="razon_visita">
+                  <option *ngFor="let razon of razonVisita" [value]="razon.value">
+                    {{razon.tag}}
+                  </option>
+                </select>
+                <div class="validacion">
+                  <span *ngIf="myForm.get('razon_visita').errors?.required && myForm.get('razon_visita').touched">
+                    Por favor seleccione un item
+                  </span>
+                </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="">Canal de atención <strong>*</strong></label>
+            <div>
+              <select formControlName="canal_atencion">
+                  <option *ngFor="let canal of canalAtencion" [value]="canal.value">
+                    {{canal.tag}}
+                  </option>
+                </select>
+                <div class="validacion">
+                  <span *ngIf="myForm.get('canal_atencion').errors?.required && myForm.get('canal_atencion').touched">
+                    Por favor seleccione un item
+                  </span>
+                </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-4">
+
+          <div class="mb-4">
+            <label class="">Nombres <strong>*</strong></label><br>
+            <input formControlName="nombres" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('nombres').errors?.required && myForm.get('nombres').touched">
+                Por favor escriba el nombre
+              </span>
+              <span *ngIf="myForm.get('nombres').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("nombres").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="">Teléfono 1 del visitante <strong>*</strong></label><br>
+            <input formControlName="tel_cont_1" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('tel_cont_1').errors?.required && myForm.get('tel_cont_1').touched">
+                Por favor escriba el teléfono de contacto
+              </span>
+              <span *ngIf="myForm.get('tel_cont_1').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("tel_cont_1").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="">Especifique <strong>*</strong></label><br>
+            <input formControlName="otro" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('otro').errors?.required && myForm.get('otro').touched">
+                Por favor especifique la razón de visita
+              </span>
+              <span *ngIf="myForm.get('otro').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("otro").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <button [disabled]="myForm.invalid" type="submit" class="d-flex align-items-center m-auto px-4 mt-5">
+         <span>GUARDAR</span> <span class="material-icons">save</span>
+      </button>
+
+    </form>
+    <!-- <pre>
+      {{myForm.value | json}}
+    </pre> -->
+    <!-- <pre>
+      {{ myForm.status }}
+    </pre> -->
+  </div>
+</div>

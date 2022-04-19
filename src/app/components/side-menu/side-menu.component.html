@@ -1,0 +1,10 @@
+<div class="">
+  <button type="button" (click)="mostrarMenu()">{{ menuText }}</button>
+  <nav [style.opacity]="menuShow" class="side-menu">
+    <ul class="nav flex-column">
+      <li class="nav-item" *ngFor="let nav of navigate">
+        <a class="nav-link" routerLink="inicio/{{nav.link}}" routerLinkActive="activo">{{nav.title}}</a>
+      </li>
+    </ul>
+  </nav>
+</div>

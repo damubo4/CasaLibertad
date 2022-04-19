@@ -1,0 +1,9 @@
+.header {
+  background-color: #9F2257;
+}
+
+.arrow-down {
+  border-right: solid 1px black;
+  transform: rotate(180deg);
+  background-color: rgb(228, 228, 228);
+}
