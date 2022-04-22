@@ -5,6 +5,7 @@ import { VariablesService } from 'src/app/services/variables/variables.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-recepcion',
@@ -152,30 +153,34 @@ export class RecepcionComponent implements OnInit {
     return this.myForm.get('documento').invalid && this.myForm.get('documento').touched;
   }
 
-  save(){
+  save(){     
     const RECEPCION = {
-      rec_terminos: this.myForm.get('aut_datos').value,
-      rec_tipoDoc: this.myForm.get('tipo_doc').value,
-      rec_doc: this.myForm.get('documento').value,
-      rec_nombres: this.myForm.get('nombres').value,
-      rec_primerApellido: this.myForm.get('primer_apellido').value,
-      rec_segundoApellido: this.myForm.get('segundo_apellido').value,
-      rec_tel1Vis: this.myForm.get('tel_cont_1').value,
-      rec_tel2Vis: this.myForm.get('tel_cont_2').value,
-      rec_razonVisita: this.myForm.get('razon_visita').value,
-      rec_especifique: this.myForm.get('otro').value,
-      rec_dimension: this.myForm.get('cita_taller').value,
-      rec_canalAtencion: this.myForm.get('canal_atencion').value
-    };    
+      user: {
+        document_type_id: this.myForm.get('tipo_doc').value,
+        document_number: this.myForm.get('documento').value,
+        names_user: this.myForm.get('nombres').value,
+        first_last_name: this.myForm.get('primer_apellido').value,
+        secound_last_name: this.myForm.get('segundo_apellido').value,
+        phone_1: this.myForm.get('tel_cont_1').value,
+        phone_2: this.myForm.get('tel_cont_2').value,
+      },
+      data_processing_consent: this.myForm.get('aut_datos').value,
+      reason_visit_id: this.myForm.get('razon_visita').value,     
+      other_reason: this.myForm.get('otro').value,
+      workshop_appointment_id: this.myForm.get('cita_taller').value,
+      service_channel_id: this.myForm.get('canal_atencion').value
+    };     
     console.log(RECEPCION);
     this._recepcionService.addRecepcion(RECEPCION).subscribe(datos => {
       this.snackBar.open('El registro se realizó con éxito','', {
         duration: 3000
         });
       this.route.navigate(['/inicio'])
-    }), error => {
+    }, (error) => {
       this.myForm.reset();
-    }
+
+      }
+    )
   }
 
   consultaRecepcion(doc) {
@@ -186,33 +191,50 @@ export class RecepcionComponent implements OnInit {
         });
 
       this.myForm.patchValue({
-        aut_datos: datos.rec_terminos,
-        tipo_doc: datos.rec_tipoDoc,
-        documento: datos.rec_doc,
-        nombres: datos.rec_nombres,
-        primer_apellido: datos.rec_primerApellido,
-        segundo_apellido: datos.rec_segundoApellido,
-        tel_cont_1: datos.rec_tel1Vis,
-        tel_cont_2: datos.rec_tel2Vis,
-        razon_visita: datos.rec_razonVisita,
-        otro: datos.rec_especifique,
-        cita_taller: datos.rec_dimension,
-        canal_atencion: datos.rec_canalAtencion
+        aut_datos: datos.data_processing_consent,
+        tipo_doc: datos.user.document_type_id,
+        documento: datos.user.document_number,
+        nombres: datos.user.names_user,
+        primer_apellido: datos.user.first_last_name,
+        segundo_apellido: datos.user.secound_last_name,
+        tel_cont_1: datos.user.phone_1,
+        tel_cont_2: datos.user.phone_2,
+        razon_visita: datos.reason_visit_id,
+        otro: datos.other_reason,
+        cita_taller: datos.workshop_appointment_id,
+        canal_atencion: datos.service_channel_id
       })       
-        if (datos.rec_doc != null) {
+        if (datos.user.document_number != null) {
             this.stateForm = true;
       }       
     }, (error) => {
-      console.log("hay un error", error);
-      this.snackBar.open('No se encontro un registro asociado a este documento','', {
-        duration: 7000
-        });
-        this.stateForm = true;
-        this.myForm.reset();
+      if (error.status === 404) {
+        console.log("Error 404, no hay registros");
+        this.snackBar.open('No se encontro un registro asociado a este documento','', {
+          duration: 7000
+          });
+          this.stateForm = true;
+          this.myForm.reset();
+      }
     }
     )
   } 
   
 }
+
+
+// {
+//   1: {
+//     sub_1: 3,
+//     sub_2: 2
+//   },
+//   2: {
+//     sub_1: 3,
+//     sub_2: 2
+//   },
+//   4: ,
+//   5: ,
+
+// }
 
 

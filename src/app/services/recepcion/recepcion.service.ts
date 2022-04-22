@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class RecepcionService {
 
   URL = 'http://localhost:3000/recepcion/';
+  
+
 
   constructor(private http:HttpClient) { }
 
