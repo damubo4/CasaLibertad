@@ -4,6 +4,7 @@ import { RecepcionService } from 'src/app/services/recepcion/recepcion.service';
 import { VariablesService } from 'src/app/services/variables/variables.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-recepcion',
@@ -15,7 +16,8 @@ export class RecepcionComponent implements OnInit {
   isDisabled = true;
   escalaTexto: number = 1;
   color: string = "#595959";
-
+  docVisit: number;
+  stateForm: boolean = false;  
 
   myForm = this.myFormBuilder.group({
     aut_datos: ['', [Validators.required, Validators.maxLength(2), Validators.pattern('1')]],
@@ -76,7 +78,7 @@ export class RecepcionComponent implements OnInit {
 
   ngOnInit(): void {
     this.variablesService.incTexto$.subscribe(valor => {
-      console.log(valor);
+      
       this.escalaTexto = this.escalaTexto + 0.1;
     if (this.escalaTexto >= 1.7) {
       this.escalaTexto = 1.7;
@@ -84,7 +86,7 @@ export class RecepcionComponent implements OnInit {
     });
 
     this.variablesService.decTexto$.subscribe(valor => {
-      console.log(valor);
+      
       this.escalaTexto = this.escalaTexto - 0.1;
     if (this.escalaTexto <= 1) {
       this.escalaTexto = 1;
@@ -94,16 +96,16 @@ export class RecepcionComponent implements OnInit {
     this.variablesService.contraste$.subscribe(datoContraste => {
       if (datoContraste === true ) {
         this.color = "#595959";
-        console.log(datoContraste);
+        
         } else if (datoContraste === false) {
           this.color = "#000";
-          console.log(datoContraste);
+          
         }
     });
 
     this.myForm.get('otro').disable();
     this.myForm.get('razon_visita').valueChanges.subscribe(valor => {
-      console.log(valor);
+      
       if(valor === '7'){
         this.myForm.get('otro').enable();
       } else if (valor !== '7') {
@@ -113,7 +115,7 @@ export class RecepcionComponent implements OnInit {
 
     this.myForm.get('cita_taller').disable();
     this.myForm.get('razon_visita').valueChanges.subscribe(valor => {
-      console.log(valor);
+      
       if(valor === '3' ||  valor === '4'){
         this.myForm.get('cita_taller').enable();
       } else if (valor !== '3' || valor !== '4') {
@@ -122,7 +124,7 @@ export class RecepcionComponent implements OnInit {
     });
 
     this.myForm.get('tipo_doc').valueChanges.subscribe(valor => {
-      console.log(valor);
+      
       if(valor === '1' ||  valor === '4'){
         this.myForm.get('documento').setValidators([Validators.maxLength(10), Validators.required]);
       } else if (valor === '2') {
@@ -130,7 +132,7 @@ export class RecepcionComponent implements OnInit {
       } else if (valor === '3') {
         this.myForm.get('documento').setValidators([Validators.maxLength(16), Validators.required]);
       }
-    });
+    }); 
     
   }
 
@@ -176,4 +178,41 @@ export class RecepcionComponent implements OnInit {
     }
   }
 
+  consultaRecepcion(doc) {
+    this._recepcionService.getRecepcion(doc).subscribe(datos => {      
+      console.log(datos);
+      this.snackBar.open('Se encontro un registro asociado a este documento','', {
+        duration: 7000
+        });
+
+      this.myForm.patchValue({
+        aut_datos: datos.rec_terminos,
+        tipo_doc: datos.rec_tipoDoc,
+        documento: datos.rec_doc,
+        nombres: datos.rec_nombres,
+        primer_apellido: datos.rec_primerApellido,
+        segundo_apellido: datos.rec_segundoApellido,
+        tel_cont_1: datos.rec_tel1Vis,
+        tel_cont_2: datos.rec_tel2Vis,
+        razon_visita: datos.rec_razonVisita,
+        otro: datos.rec_especifique,
+        cita_taller: datos.rec_dimension,
+        canal_atencion: datos.rec_canalAtencion
+      })       
+        if (datos.rec_doc != null) {
+            this.stateForm = true;
+      }       
+    }, (error) => {
+      console.log("hay un error", error);
+      this.snackBar.open('No se encontro un registro asociado a este documento','', {
+        duration: 7000
+        });
+        this.stateForm = true;
+        this.myForm.reset();
+    }
+    )
+  } 
+  
 }
+
+

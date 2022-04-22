@@ -7,11 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class RecepcionService {
 
-  URL = ' http://localhost:3000/recepcion';
+  URL = 'http://localhost:3000/recepcion/';
 
   constructor(private http:HttpClient) { }
 
   addRecepcion(recepcion): Observable<any> {    
     return this.http.post(this.URL, recepcion);
+  }
+
+  getRecepcion(id): Observable<any> {    
+    return this.http.get(this.URL + id);
   }
 }

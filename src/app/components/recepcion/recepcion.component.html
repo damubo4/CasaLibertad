@@ -1,6 +1,6 @@
 <div [style.font-size.vw]="escalaTexto" [style.color]="color">
   <div class="px-4">
-    <form [formGroup]="myForm" (ngSubmit)="save()">
+    <form  [formGroup]="myForm">
 
       <div class="mb-4">
 
@@ -22,10 +22,9 @@
           </div>
         </div>
 
-      <div class="row">
-        <div class="col-lg-4">
+      <div class="row mb-5">
 
-          <div class="mb-4">
+          <div class="col-lg-4">
             <label class="">Tipo de documento <strong>*</strong></label>
             <div>
               <select  formControlName="tipo_doc">
@@ -34,6 +33,7 @@
                   </option>
                 </select>
               </div>
+              
               <div class="validacion">
                 <span *ngIf="myForm.get('tipo_doc').errors?.required && myForm.get('tipo_doc').touched">
                   Por favor seleccione un tipo de documento
@@ -41,7 +41,47 @@
               </div>
             </div>
 
-          <div class="mb-4">
+            <div class="col-lg-4">
+            <label class="">Número de documento <strong>*</strong></label><br>
+            <input formControlName="documento" type="text">
+            
+            <div class="validacion">
+              <span *ngIf="myForm.get('documento').errors?.required && myForm.get('documento').touched">
+                Por favor escriba el numero de documento
+              </span>
+              <span *ngIf="myForm.get('documento').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("documento").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="col-lg-4 text-start align-self-center">
+            <button (click)="consultaRecepcion(myForm.get('documento').value)" type="button" class="d-flex align-items-center px-4">
+              <span>VERIFICAR</span> <span class="material-icons">
+                search
+                </span>
+            </button>
+          </div>
+
+        </div>
+
+      <div *ngIf="stateForm">     
+
+        <div class="row mb-5">
+          <div class="col-lg-4">
+            <label class="">Nombres <strong>*</strong></label><br>
+            <input formControlName="nombres" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('nombres').errors?.required && myForm.get('nombres').touched">
+                Por favor escriba el nombre
+              </span>
+              <span *ngIf="myForm.get('nombres').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("nombres").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
             <label class="">Primer apellido <strong>*</strong></label><br>
             <input formControlName="primer_apellido" type="text">
             <div class="validacion">
@@ -54,7 +94,31 @@
             </div>
           </div>
 
-          <div class="mb-4">
+          <div class="col-lg-4">
+            <label class="">Segundo apellido</label><br>
+            <input formControlName="segundo_apellido" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('segundo_apellido').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("segundo_apellido").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-5">
+          <div class="col-lg-4">
+            <label class="">Teléfono 1 del visitante <strong>*</strong></label><br>
+            <input formControlName="tel_cont_1" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('tel_cont_1').errors?.required && myForm.get('tel_cont_1').touched">
+                Por favor escriba el teléfono de contacto
+              </span>
+              <span *ngIf="myForm.get('tel_cont_1').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("tel_cont_1").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+          <div class="col-lg-4">
             <label class="">Teléfono 2 del visitante</label><br>
             <input formControlName="tel_cont_2" type="number">
             <div class="validacion">
@@ -63,8 +127,40 @@
               </span>
             </div>
           </div>
+          <div class="col-lg-4">
+            <label class="">Razón de visita <strong>*</strong></label>
+            <div>
+              <select formControlName="razon_visita">
+                  <option *ngFor="let razon of razonVisita" [value]="razon.value">
+                    {{razon.tag}}
+                  </option>
+                </select>
+                <div class="validacion">
+                  <span *ngIf="myForm.get('razon_visita').errors?.required && myForm.get('razon_visita').touched">
+                    Por favor seleccione un item
+                  </span>
+                </div>
+            </div>
+          </div>
+        </div>
 
-          <div class="mb-4">
+          
+
+        <div class="row">
+          <div class="col-lg-4">
+            <label class="">Especifique <strong>*</strong></label><br>
+            <input formControlName="otro" type="text">
+            <div class="validacion">
+              <span *ngIf="myForm.get('otro').errors?.required && myForm.get('otro').touched">
+                Por favor especifique la razón de visita
+              </span>
+              <span *ngIf="myForm.get('otro').errors?.maxlength">
+                El campo debe contener maximo {{ myForm.get("otro").errors?.maxlength?.requiredLength }} caracteres.
+              </span>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
             <label class="">¿Con cúal dimensión tiene cita/taller? <strong>*</strong></label>
             <div>
               <select formControlName="cita_taller">
@@ -80,49 +176,7 @@
             </div>
           </div>
 
-        </div>
-        <div class="col-lg-4">
-
-          <div class="mb-4">
-            <label class="">Número de documento <strong>*</strong></label><br>
-            <input formControlName="documento" type="text">
-            <div class="validacion">
-              <span *ngIf="myForm.get('documento').errors?.required && myForm.get('documento').touched">
-                Por favor escriba el numero de documento
-              </span>
-              <span *ngIf="myForm.get('documento').errors?.maxlength">
-                El campo debe contener maximo {{ myForm.get("documento").errors?.maxlength?.requiredLength }} caracteres.
-              </span>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="">Segundo apellido</label><br>
-            <input formControlName="segundo_apellido" type="text">
-            <div class="validacion">
-              <span *ngIf="myForm.get('segundo_apellido').errors?.maxlength">
-                El campo debe contener maximo {{ myForm.get("segundo_apellido").errors?.maxlength?.requiredLength }} caracteres.
-              </span>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="">Razón de visita <strong>*</strong></label>
-            <div>
-              <select formControlName="razon_visita">
-                  <option *ngFor="let razon of razonVisita" [value]="razon.value">
-                    {{razon.tag}}
-                  </option>
-                </select>
-                <div class="validacion">
-                  <span *ngIf="myForm.get('razon_visita').errors?.required && myForm.get('razon_visita').touched">
-                    Por favor seleccione un item
-                  </span>
-                </div>
-            </div>
-          </div>
-
-          <div class="mb-4">
+          <div class="col-lg-4">
             <label class="">Canal de atención <strong>*</strong></label>
             <div>
               <select formControlName="canal_atencion">
@@ -136,58 +190,17 @@
                   </span>
                 </div>
             </div>
-          </div>
-
+          </div> 
+        </div>          
+      
+        <div class="col-lg-12">
+          <button [disabled]="myForm.invalid" (click)=" save()" type="button" class="d-flex align-items-center m-auto px-4 mt-5">
+            <span>GUARDAR</span> <span class="material-icons">save</span>
+         </button>
         </div>
-        <div class="col-lg-4">
-
-          <div class="mb-4">
-            <label class="">Nombres <strong>*</strong></label><br>
-            <input formControlName="nombres" type="text">
-            <div class="validacion">
-              <span *ngIf="myForm.get('nombres').errors?.required && myForm.get('nombres').touched">
-                Por favor escriba el nombre
-              </span>
-              <span *ngIf="myForm.get('nombres').errors?.maxlength">
-                El campo debe contener maximo {{ myForm.get("nombres").errors?.maxlength?.requiredLength }} caracteres.
-              </span>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="">Teléfono 1 del visitante <strong>*</strong></label><br>
-            <input formControlName="tel_cont_1" type="text">
-            <div class="validacion">
-              <span *ngIf="myForm.get('tel_cont_1').errors?.required && myForm.get('tel_cont_1').touched">
-                Por favor escriba el teléfono de contacto
-              </span>
-              <span *ngIf="myForm.get('tel_cont_1').errors?.maxlength">
-                El campo debe contener maximo {{ myForm.get("tel_cont_1").errors?.maxlength?.requiredLength }} caracteres.
-              </span>
-            </div>
-          </div>
-
-          <div class="mb-4">
-            <label class="">Especifique <strong>*</strong></label><br>
-            <input formControlName="otro" type="text">
-            <div class="validacion">
-              <span *ngIf="myForm.get('otro').errors?.required && myForm.get('otro').touched">
-                Por favor especifique la razón de visita
-              </span>
-              <span *ngIf="myForm.get('otro').errors?.maxlength">
-                El campo debe contener maximo {{ myForm.get("otro").errors?.maxlength?.requiredLength }} caracteres.
-              </span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <button [disabled]="myForm.invalid" type="submit" class="d-flex align-items-center m-auto px-4 mt-5">
-         <span>GUARDAR</span> <span class="material-icons">save</span>
-      </button>
-
+      </div>      
     </form>
+    
     <!-- <pre>
       {{myForm.value | json}}
     </pre> -->
