@@ -36,36 +36,36 @@ export class RecepcionComponent implements OnInit {
   });
 
   tipoDocumento = [
-    { value: '1', tag: 'Cedula de Ciudadania' },
-    { value: '2', tag: 'Documento extranjeria' },
-    { value: '3', tag: 'Pasaporte' },
-    { value: '4', tag: 'Tarjeta de identidad' }
+    { value: 1, tag: 'Cedula de Ciudadania' },
+    { value: 2, tag: 'Documento extranjeria' },
+    { value: 3, tag: 'Pasaporte' },
+    { value: 4, tag: 'Tarjeta de identidad' }
   ];
 
   citaTaller = [
-    { value: '1', tag: 'Articulador' },
-    { value: '2', tag: 'Acogida' },
-    { value: '3', tag: 'Individual' },
-    { value: '4', tag: 'Familiar' },
-    { value: '5', tag: 'Empleabilidad' },
-    { value: '6', tag: 'Autoempleo/emprendimiento' },
-    { value: '7', tag: 'Comunitaria' }
+    { value: 1, tag: 'Articulador' },
+    { value: 2, tag: 'Acogida' },
+    { value: 3, tag: 'Individual' },
+    { value: 4, tag: 'Familiar' },
+    { value: 5, tag: 'Empleabilidad' },
+    { value: 6, tag: 'Autoempleo/emprendimiento' },
+    { value: 7, tag: 'Comunitaria' }
   ];
 
   razonVisita = [
-    { value: '1', tag: 'Obtener información general del programa'},
-    { value: '2', tag: 'Primera visita, interes en ser beneficiario' },
-    { value: '3', tag: 'Cita con dimensión/articulador' },
-    { value: '4', tag: 'Taller/curso/capacitación' },
-    { value: '5', tag: 'Empleabilidad' },
-    { value: '6', tag: 'Admministrativo' },
-    { value: '7', tag: 'Otro' }
+    { value: 1, tag: 'Obtener información general del programa'},
+    { value: 2, tag: 'Primera visita, interes en ser beneficiario' },
+    { value: 3, tag: 'Cita con dimensión/articulador' },
+    { value: 4, tag: 'Taller/curso/capacitación' },
+    { value: 5, tag: 'Empleabilidad' },
+    { value: 6, tag: 'Admministrativo' },
+    { value: 7, tag: 'Otro' }
   ];
 
   canalAtencion = [
-    { value: '1', tag: 'Presencial'},
-    { value: '2', tag: 'Telefonico' },
-    { value: '3', tag: 'Digital' }
+    { value: 1, tag: 'Presencial'},
+    { value: 2, tag: 'Telefonico' },
+    { value: 3, tag: 'Digital' }
 
   ];
   
@@ -183,8 +183,8 @@ export class RecepcionComponent implements OnInit {
     )
   }
 
-  consultaRecepcion(doc) {
-    this._recepcionService.getRecepcion(doc).subscribe(datos => {      
+  consultaRecepcion(doc,tipo_doc) {
+    this._recepcionService.getRecepcion(doc,tipo_doc).subscribe(datos => {      
       console.log(datos);
       this.snackBar.open('Se encontro un registro asociado a este documento','', {
         duration: 7000
@@ -208,13 +208,11 @@ export class RecepcionComponent implements OnInit {
             this.stateForm = true;
       }       
     }, (error) => {
-      if (error.status === 404) {
-        console.log("Error 404, no hay registros");
+      if (error.status === 500) {
         this.snackBar.open('No se encontro un registro asociado a este documento','', {
           duration: 7000
           });
           this.stateForm = true;
-          this.myForm.reset();
       }
     }
     )
