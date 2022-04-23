@@ -22,18 +22,18 @@ export class RecepcionComponent implements OnInit {
 
   myForm = this.myFormBuilder.group({
     aut_datos: ['', [Validators.required, Validators.maxLength(2), Validators.pattern('1')]],
-    tipo_doc: ['', [Validators.required]],
+    tipo_doc: [, [Validators.required]],
     documento: ['', [Validators.required]],
     nombres: ['', [Validators.required, Validators.maxLength(20)]],
     primer_apellido: ['', [Validators.required, Validators.maxLength(20)]],
     segundo_apellido: ['', [Validators.maxLength(20)]],
     tel_cont_1: ['', [Validators.required, Validators.maxLength(10)]],
-    tel_cont_2: ['', [Validators.maxLength(10)]],
-    razon_visita: ['', [Validators.required]],
+    tel_cont_2: [, [Validators.maxLength(10)]],
+    razon_visita: [, [Validators.required]],
     otro: ['', [Validators.required, Validators.maxLength(20)]],
-    cita_taller: ['', [Validators.required]],
-    canal_atencion: ['', [Validators.required]]
-  });
+    cita_taller: [, [Validators.required]],
+    canal_atencion: [, [Validators.required]]
+  });s
 
   tipoDocumento = [
     { value: 1, tag: 'Cedula de Ciudadania' },
@@ -154,9 +154,10 @@ export class RecepcionComponent implements OnInit {
   }
 
   save(){     
+    
     const RECEPCION = {
       user: {
-        document_type_id: this.myForm.get('tipo_doc').value,
+        document_type_id:Number(this.myForm.get('tipo_doc').value),
         document_number: this.myForm.get('documento').value,
         names_user: this.myForm.get('nombres').value,
         first_last_name: this.myForm.get('primer_apellido').value,
@@ -165,10 +166,10 @@ export class RecepcionComponent implements OnInit {
         phone_2: this.myForm.get('tel_cont_2').value,
       },
       data_processing_consent: this.myForm.get('aut_datos').value,
-      reason_visit_id: this.myForm.get('razon_visita').value,     
+      reason_visit_id: Number(this.myForm.get('razon_visita').value),     
       other_reason: this.myForm.get('otro').value,
-      workshop_appointment_id: this.myForm.get('cita_taller').value,
-      service_channel_id: this.myForm.get('canal_atencion').value
+      workshop_appointment_id: Number(this.myForm.get('cita_taller').value),
+      service_channel_id: Number(this.myForm.get('canal_atencion').value)
     };     
     console.log(RECEPCION);
     this._recepcionService.addRecepcion(RECEPCION).subscribe(datos => {
@@ -183,8 +184,10 @@ export class RecepcionComponent implements OnInit {
     )
   }
 
-  consultaRecepcion(doc,tipo_doc) {
-    this._recepcionService.getRecepcion(doc,tipo_doc).subscribe(datos => {      
+  consultaRecepcion(doc,type) {
+    var type_doc = Number(this.myForm.get('tipo_doc').value)
+    this.stateForm = true;
+    this._recepcionService.getRecepcion(doc,type_doc).subscribe(datos => {      
       console.log(datos);
       this.snackBar.open('Se encontro un registro asociado a este documento','', {
         duration: 7000
@@ -213,6 +216,7 @@ export class RecepcionComponent implements OnInit {
           duration: 7000
           });
           this.stateForm = true;
+
       }
     }
     )

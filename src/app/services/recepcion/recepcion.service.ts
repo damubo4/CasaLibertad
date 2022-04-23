@@ -28,14 +28,18 @@ export class RecepcionService {
     "workshop_appointment_id": 1,
     "service_channel_id": 1
   }`
-  addRecepcion(recepcion2): Observable<any> {    
-    console.log("post recepcion"+recepcion2)
-    return this.http.post(this.URL, recepcion2);
+  addRecepcion(recepcion): Observable<any> {    
+    // console.log("post recepcion"+recepcion)
+    var res = this.http.post(this.URL, recepcion);
+    console.log("res-->"+Object.values(res));
+    return res;
+    
   }
 
   getRecepcion(id,type): Observable<any> {    
-   
-    return this.http.get(this.URL +'?document_type_id=1&'+'document_number='+id);
+    console.log("id"+id)
+    console.log("---- type  "+type)
+    return this.http.get(this.URL +'?document_type_id='+type+'&'+'document_number='+id);
   }
 }
 

@@ -108,7 +108,7 @@
         <div class="row mb-5">
           <div class="col-lg-4">
             <label class="">Teléfono 1 del visitante <strong>*</strong></label><br>
-            <input formControlName="tel_cont_1" type="text">
+            <input formControlName="tel_cont_1" type="number">
             <div class="validacion">
               <span *ngIf="myForm.get('tel_cont_1').errors?.required && myForm.get('tel_cont_1').touched">
                 Por favor escriba el teléfono de contacto
@@ -201,9 +201,10 @@
       </div>      
     </form>
     
-    <!-- <pre>
+    
+    <pre>
       {{myForm.value | json}}
-    </pre> -->
+    </pre>
     <!-- <pre>
       {{ myForm.status }}
     </pre> -->
