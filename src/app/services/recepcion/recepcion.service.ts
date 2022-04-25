@@ -41,6 +41,10 @@ export class RecepcionService {
     console.log("---- type  "+type)
     return this.http.get(this.URL +'?document_type_id='+type+'&'+'document_number='+id);
   }
+  
+  editRecepcion(id, recepcion): Observable<any> {    
+    return this.http.put(this.URL + id, recepcion);
+  }
 }
 
 
