@@ -120,6 +120,7 @@ export class RecepcionComponent implements OnInit {
       if(valor === '7'){
         this.myForm.get('otro').enable();
       } else if (valor !== '7') {
+        this.myForm.get('otro').setValue("");
         this.myForm.get('otro').disable();
       }
     });
@@ -130,6 +131,7 @@ export class RecepcionComponent implements OnInit {
       if(valor === '3' ||  valor === '4'){
         this.myForm.get('cita_taller').enable();
       } else if (valor !== '3' || valor !== '4') {
+        this.myForm.get('cita_taller').setValue("");
         this.myForm.get('cita_taller').disable();
       }
     });
