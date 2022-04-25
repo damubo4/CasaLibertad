@@ -56,7 +56,7 @@
           </div>
 
           <div class="col-lg-4 text-start align-self-center">
-            <button (click)="consultaRecepcion((myForm.get('documento').value),(myForm.get('tipo_doc')))" type="button" class="d-flex align-items-center px-4">
+            <button [disabled]="verButton" (click)="consultaRecepcion((myForm.get('documento').value),(myForm.get('tipo_doc')))" type="button" class="d-flex align-items-center px-4">
               <span>VERIFICAR</span> <span class="material-icons">
                 search
                 </span>
