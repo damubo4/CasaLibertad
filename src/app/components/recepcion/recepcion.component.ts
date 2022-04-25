@@ -101,9 +101,17 @@ export class RecepcionComponent implements OnInit {
         this.color = "#595959";
         
         } else if (datoContraste === false) {
-          this.color = "#000";
-          
+          this.color = "#000";          
         }
+    });
+
+    this.myForm.get('aut_datos').valueChanges.subscribe(valor => {
+      if(valor === '1'){
+        this.verButton = false;
+      }
+      if(valor === '2'){
+        this.verButton = true;
+      }
     });
 
     this.myForm.get('otro').disable();
