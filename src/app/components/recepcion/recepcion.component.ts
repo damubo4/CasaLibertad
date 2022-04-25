@@ -18,7 +18,9 @@ export class RecepcionComponent implements OnInit {
   escalaTexto: number = 1;
   color: string = "#595959";
   docVisit: number;
-  stateForm: boolean = false;  
+  stateForm: boolean = false;
+  verButton: boolean = true;
+  editRec: boolean = false;
 
   myForm = this.myFormBuilder.group({
     aut_datos: ['', [Validators.required, Validators.maxLength(2), Validators.pattern('1')]],
@@ -171,17 +173,36 @@ export class RecepcionComponent implements OnInit {
       workshop_appointment_id: Number(this.myForm.get('cita_taller').value),
       service_channel_id: Number(this.myForm.get('canal_atencion').value)
     };     
-    console.log(RECEPCION);
-    this._recepcionService.addRecepcion(RECEPCION).subscribe(datos => {
-      this.snackBar.open('El registro se realizó con éxito','', {
-        duration: 3000
-        });
-      this.route.navigate(['/inicio'])
-    }, (error) => {
-      this.myForm.reset();
+    
+    if (this.editRec === false) {
+      
+      this._recepcionService.addRecepcion(RECEPCION).subscribe(datos => {        
+        console.log(datos);
+        this.snackBar.open('El registro se realizó con éxito','', {
+          duration: 3000
+          });
+        this.route.navigate(['/inicio'])
+      }, (error) => {
+        this.myForm.reset();
+  
+        }
+      )
+    }
 
-      }
-    )
+    if (this.editRec === true) {
+      this._recepcionService.editRecepcion(this.myForm.get('documento').value,RECEPCION).subscribe(datos => {        
+        this.snackBar.open('El registro se realizó con éxito','', {
+          duration: 3000
+          });
+        this.route.navigate(['/inicio'])
+      }, (error) => {
+        this.myForm.reset();
+  
+        }
+      )
+      
+    }
+    
   }
 
   consultaRecepcion(doc,type) {
@@ -208,7 +229,10 @@ export class RecepcionComponent implements OnInit {
         canal_atencion: datos.service_channel_id
       })       
         if (datos.user.document_number != null) {
+            this.editRec = true;
             this.stateForm = true;
+            this.myForm.get('documento').disable();
+            this.myForm.get('tipo_doc').disable();
       }       
     }, (error) => {
       if (error.status === 500) {
@@ -225,18 +249,5 @@ export class RecepcionComponent implements OnInit {
 }
 
 
-// {
-//   1: {
-//     sub_1: 3,
-//     sub_2: 2
-//   },
-//   2: {
-//     sub_1: 3,
-//     sub_2: 2
-//   },
-//   4: ,
-//   5: ,
-
-// }
 
 
