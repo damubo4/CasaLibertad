@@ -245,7 +245,7 @@ export class RecepcionComponent implements OnInit {
             this.myForm.get('tipo_doc').disable();
       }       
     }, (error) => {
-      if (error.status === 500) {
+      if (error.status === 200) {
         this.snackBar.open('No se encontro un registro asociado a este documento','', {
           duration: 7000
           });

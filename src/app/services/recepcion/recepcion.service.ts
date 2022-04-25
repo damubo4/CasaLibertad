@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RecepcionService {
 
-  URL = 'http://localhost:8080/api/reception/visitor';
+  URL = 'http://127.0.0.1:8080/api/reception/visitor';
 
 
   constructor(private http:HttpClient) { }
@@ -29,7 +29,7 @@ export class RecepcionService {
     "service_channel_id": 1
   }`
   addRecepcion(recepcion): Observable<any> {    
-    // console.log("post recepcion"+recepcion)
+    console.log("post recepcion",recepcion)
     var res = this.http.post(this.URL, recepcion);
     console.log("res-->"+Object.values(res));
     return res;
@@ -42,8 +42,11 @@ export class RecepcionService {
     return this.http.get(this.URL +'?document_type_id='+type+'&'+'document_number='+id);
   }
   
-  editRecepcion(id, recepcion): Observable<any> {    
-    return this.http.put(this.URL + id, recepcion);
+  editRecepcion(id, recepcion): Observable<any> {   
+    recepcion.user.document_type_id = 1;
+    const finalURL = this.URL +'?document_type_id='+recepcion.user.document_type_id+'&'+'document_number='+id;
+    console.log("URL PARA PUT "+finalURL, recepcion); 
+    return this.http.put(finalURL, recepcion);
   }
 }
 
