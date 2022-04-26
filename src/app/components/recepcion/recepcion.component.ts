@@ -30,7 +30,7 @@ export class RecepcionComponent implements OnInit {
     primer_apellido: ['', [Validators.required, Validators.maxLength(20)]],
     segundo_apellido: ['', [Validators.maxLength(20)]],
     tel_cont_1: ['', [Validators.required, Validators.maxLength(10)]],
-    tel_cont_2: [, [Validators.maxLength(10)]],
+    tel_cont_2: [0, [Validators.maxLength(10)]],
     razon_visita: [, [Validators.required]],
     otro: ['', [Validators.required, Validators.maxLength(20)]],
     cita_taller: [, [Validators.required]],
@@ -226,17 +226,17 @@ export class RecepcionComponent implements OnInit {
 
       this.myForm.patchValue({
         aut_datos: datos.data_processing_consent,
-        tipo_doc: datos.user.document_type_id,
+        tipo_doc: datos.user.document_type.id,
         documento: datos.user.document_number,
         nombres: datos.user.names_user,
         primer_apellido: datos.user.first_last_name,
         segundo_apellido: datos.user.secound_last_name,
         tel_cont_1: datos.user.phone_1,
         tel_cont_2: datos.user.phone_2,
-        razon_visita: datos.reason_visit_id,
+        razon_visita: datos.reason_visit.id,
         otro: datos.other_reason,
         cita_taller: datos.workshop_appointment_id,
-        canal_atencion: datos.service_channel_id
+        canal_atencion: datos.service_channel.id
       })       
         if (datos.user.document_number != null) {
             this.editRec = true;
@@ -245,7 +245,7 @@ export class RecepcionComponent implements OnInit {
             this.myForm.get('tipo_doc').disable();
       }       
     }, (error) => {
-      if (error.status === 200) {
+      if (error.status === 500) {
         this.snackBar.open('No se encontro un registro asociado a este documento','', {
           duration: 7000
           });
