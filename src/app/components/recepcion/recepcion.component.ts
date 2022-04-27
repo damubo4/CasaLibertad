@@ -23,7 +23,7 @@ export class RecepcionComponent implements OnInit {
   editRec: boolean = false;
 
   myForm = this.myFormBuilder.group({
-    aut_datos: ['', [Validators.required, Validators.maxLength(2), Validators.pattern('1')]],
+    aut_datos: [2, [Validators.required, Validators.maxLength(2), Validators.pattern('1')]],
     tipo_doc: [, [Validators.required]],
     documento: ['', [Validators.required]],
     nombres: ['', [Validators.required, Validators.maxLength(20)]],
@@ -245,7 +245,7 @@ export class RecepcionComponent implements OnInit {
             this.myForm.get('tipo_doc').disable();
       }       
     }, (error) => {
-      if (error.status === 500) {
+      if (error.status == 404) {
         this.snackBar.open('No se encontro un registro asociado a este documento','', {
           duration: 7000
           });
