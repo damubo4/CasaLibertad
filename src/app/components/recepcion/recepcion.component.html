@@ -113,18 +113,16 @@
               <span *ngIf="myForm.get('tel_cont_1').errors?.required && myForm.get('tel_cont_1').touched">
                 Por favor escriba el teléfono de contacto
               </span>
-              <span *ngIf="myForm.get('tel_cont_1').errors?.maxlength">
-                El campo debe contener maximo {{ myForm.get("tel_cont_1").errors?.maxlength?.requiredLength }} caracteres.
-              </span>
+              <div *ngIf="this.myForm.controls['tel_cont_1'].errors && this.myForm.controls['tel_cont_1'].errors.max">
+                <span class="validacion">El campo debe contener maximo 10 caracteres</span>
+              </div>
             </div>
           </div>
           <div class="col-lg-4">
             <label class="">Teléfono 2 del visitante</label><br>
-            <input formControlName="tel_cont_2" type="number">
-            <div class="validacion">
-              <span *ngIf="myForm.get('tel_cont_2').errors?.maxlength">
-                El campo debe contener maximo {{ myForm.get("tel_cont_2").errors?.maxlength?.requiredLength }} caracteres.
-              </span>
+            <input formControlName="tel_cont_2" type="number">            
+            <div *ngIf="this.myForm.controls['tel_cont_2'].errors && this.myForm.controls['tel_cont_2'].errors.max">
+              <span class="validacion">El campo debe contener maximo 10 caracteres</span>
             </div>
           </div>
           <div class="col-lg-4">
@@ -205,8 +203,8 @@
     <!-- <pre>
       {{myForm.value | json}}
     </pre> -->
-    <!-- <pre>
+    <pre>
       {{ myForm.status }}
-    </pre> -->
+    </pre>
   </div>
 </div>

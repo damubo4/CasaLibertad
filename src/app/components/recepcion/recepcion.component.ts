@@ -22,6 +22,9 @@ export class RecepcionComponent implements OnInit {
   verButton: boolean = true;
   editRec: boolean = false;
 
+   myNumberFieldMin: number = 0;
+   myNumberFieldMax: number = 9999999999;
+
   myForm = this.myFormBuilder.group({
     aut_datos: [2, [Validators.required, Validators.maxLength(2), Validators.pattern('1')]],
     tipo_doc: [, [Validators.required]],
@@ -29,8 +32,8 @@ export class RecepcionComponent implements OnInit {
     nombres: ['', [Validators.required, Validators.maxLength(20)]],
     primer_apellido: ['', [Validators.required, Validators.maxLength(20)]],
     segundo_apellido: ['', [Validators.maxLength(20)]],
-    tel_cont_1: ['', [Validators.required, Validators.maxLength(10)]],
-    tel_cont_2: [0, [Validators.maxLength(10)]],
+    tel_cont_1: ['', [Validators.required, Validators.min(this.myNumberFieldMin), Validators.max(this.myNumberFieldMax)]],
+    tel_cont_2: [0, [Validators.min(this.myNumberFieldMin), Validators.max(this.myNumberFieldMax)]],
     razon_visita: [, [Validators.required]],
     otro: ['', [Validators.required, Validators.maxLength(20)]],
     cita_taller: [, [Validators.required]],
@@ -103,7 +106,7 @@ export class RecepcionComponent implements OnInit {
         } else if (datoContraste === false) {
           this.color = "#000";          
         }
-    });
+    });    
 
     this.myForm.get('aut_datos').valueChanges.subscribe(valor => {
       if(valor === '1'){
