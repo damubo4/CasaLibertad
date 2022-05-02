@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class RecepcionService {
 
   URL = 'http://127.0.0.1:8080/api/reception/visitor';
+  
 
 
   constructor(private http:HttpClient) { }

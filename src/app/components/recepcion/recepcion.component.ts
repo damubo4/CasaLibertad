@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recepcion',
@@ -191,9 +192,14 @@ export class RecepcionComponent implements OnInit {
       
       this._recepcionService.addRecepcion(RECEPCION).subscribe(datos => {        
         console.log(datos);
-        this.snackBar.open('El registro se realizó con éxito','', {
-          duration: 3000
-          });
+        // this.snackBar.open('El registro se realizó con éxito','', {
+        //   duration: 3000
+        //   });
+          Swal.fire(
+            'El registro se realizó con éxito',
+            '',
+            'success'
+            );
         this.route.navigate(['/inicio'])
       }, (error) => {
         this.myForm.reset();
@@ -204,9 +210,11 @@ export class RecepcionComponent implements OnInit {
 
     if (this.editRec === true) {
       this._recepcionService.editRecepcion(this.myForm.get('documento').value,RECEPCION).subscribe(datos => {        
-        this.snackBar.open('El registro se realizó con éxito','', {
-          duration: 3000
-          });
+        Swal.fire(
+          'El registro se realizó con éxito',
+          '',
+          'success'
+          );
         this.route.navigate(['/inicio'])
       }, (error) => {
         this.myForm.reset();
@@ -223,9 +231,11 @@ export class RecepcionComponent implements OnInit {
     this.stateForm = true;
     this._recepcionService.getRecepcion(doc,type_doc).subscribe(datos => {      
       console.log(datos);
-      this.snackBar.open('Se encontro un registro asociado a este documento','', {
-        duration: 7000
-        });
+      Swal.fire(
+        'Se encontró un registro asociado a este documento',
+        '',
+        'info'
+        );
 
       this.myForm.patchValue({
         aut_datos: datos.data_processing_consent,
@@ -249,9 +259,11 @@ export class RecepcionComponent implements OnInit {
       }       
     }, (error) => {
       if (error.status == 404) {
-        this.snackBar.open('No se encontro un registro asociado a este documento','', {
-          duration: 7000
-          });
+        Swal.fire(
+          'No se encontró un registro asociado a este documento',
+          '',
+          'info'
+          );
           this.stateForm = true;
 
       }
