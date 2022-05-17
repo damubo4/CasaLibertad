@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { VariablesService } from 'src/app/services/variables/variables.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown' ;
 import { AcogidaAntService } from 'src/app/services/acogida/acogidaAnt/acogida-ant.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-acogida',
@@ -228,8 +229,17 @@ export class AcogidaComponent implements OnInit {
       "actual_process": this.myForm.get('proceso_actual').value
     };
 
-    // console.log(CRIMES);
-    // console.log(tempArray);
+    this.acogidaService.addAntecedentes(ANTECEDENTES).subscribe(value => {
+      Swal.fire(
+        'El registro se realizó con éxito',
+        '',
+        'success'
+        );
+    }, (error) => {
+      this.myForm.reset();
+
+      }
+    )
 
     console.log(ANTECEDENTES);
   }
