@@ -207,6 +207,9 @@ export class AcogidaComponent implements OnInit {
     let tempArray2 = O_CRIMES.slice();
     tempArray2 = tempArray2.map((elements)=> elements.nuevo_delito);
 
+    let fecha_libertad = this.myForm.get('fecha_libertad').value;
+    fecha_libertad = fecha_libertad.replace(/-/g, '/');
+
     const ANTECEDENTES =  {
       "court_records_id": {
         "record_policia_id": Number(this.myForm.get('ent_5').value),
@@ -217,7 +220,7 @@ export class AcogidaComponent implements OnInit {
         "record_contraloria_id": Number(this.myForm.get('ent_3').value),
         "record_rama_id": Number(this.myForm.get('ent_4').value)
       },
-      "freedom_date": this.myForm.get('fecha_libertad').value,
+      "freedom_date": fecha_libertad,
       "months_sentence": Number(this.myForm.get('meses_condena').value),
       "prison_establishment_id": Number(this.myForm.get('establecimiento').value),
       "another_prison_establishment": this.myForm.get('otro').value,
@@ -246,9 +249,8 @@ export class AcogidaComponent implements OnInit {
 
   crimes() {
     this.acogidaService.getCrimes().subscribe(valor => {
-      this.crimesList = valor;
-      // console.log(this.crimesList);
+      this.crimesList = valor.crimes;
+       console.log(this.crimesList);
     })
-
   }
 }

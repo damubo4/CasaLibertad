@@ -107,7 +107,7 @@
             <div class="row mb-4">
               <div class="col-lg-3">
                 <label for="input-1"><strong>Fecha Libertad*</strong></label><br>
-                <input formControlName="fecha_libertad" type="date" id="input-1" name="trip-start">
+                <input dateformat="d/M/y" formControlName="fecha_libertad" type="date" id="input-1" name="trip-start">
                 
                 <div class="validacion">
                   <span *ngIf="myForm.get('fecha_libertad').errors?.required && myForm.get('fecha_libertad').touched">
