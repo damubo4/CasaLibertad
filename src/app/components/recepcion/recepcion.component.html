@@ -132,7 +132,7 @@
                   <option *ngFor="let razon of razonVisita" [value]="razon.value">
                     {{razon.tag}}
                   </option>
-                </select>
+              </select>
                 <div class="validacion">
                   <span *ngIf="myForm.get('razon_visita').errors?.required && myForm.get('razon_visita').touched">
                     Por favor seleccione un item

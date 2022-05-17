@@ -1,1 +1,276 @@
-<p>acogida works!</p>
+<!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+  </button> -->
+  <mat-stepper [style.font-size.vw]="escalaTexto" [style.color]="color" [linear]="isLinear" #stepper>
+
+    <mat-step>
+      <form>
+        <ng-template matStepLabel>Registro</ng-template>        
+        <div class="text-center">
+          <button mat-button matStepperNext>SIGUIENTE></button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step label="">
+        <ng-template matStepLabel>Datos Demográficos</ng-template>
+      <form >        
+        <div class="text-center">
+          <button mat-button matStepperPrevious>&#60;ANTERIOR</button>
+          <button mat-button matStepperNext>SIGUIENTE></button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step label="Fill out your address">
+        <ng-template matStepLabel>Vivienda</ng-template>
+        <form>
+
+          <!-- <ng-multiselect-dropdown class="multiselect"
+              [placeholder]="'custom placeholder'"
+              [settings]="dropdownSettings"
+              [data]="dropdownList"
+              [(ngModel)]="selectedItems"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            >
+          </ng-multiselect-dropdown>   -->
+
+          <div class="text-center">
+            <button mat-button matStepperPrevious>&#60;ANTERIOR</button>
+            <button mat-button matStepperNext>SIGUIENTE></button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="myForm" label="">
+         <ng-template matStepLabel>Antecedentes y Privación de la Libertad</ng-template>
+        <form [formGroup]="myForm">
+          <h3 class="text-center">ANTECEDENTES Y PRIVACION DE LIBERTAD</h3>
+
+          <table class="table table table-striped mb-5">
+            <thead>
+              <tr>
+                <th scope="col">ENTIDAD</th>
+                <th scope="col">SI</th>
+                <th scope="col">NO</th>
+                <th scope="col">NO FUE POSIBLE VERIFICAR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Antecedente Personeria</th> 
+                <td><input formControlName="ent_1" value="1" type="radio"></td>
+                <td><input formControlName="ent_1" value="2" type="radio"></td>
+                <td><input formControlName="ent_1" value="3" type="radio"></td>
+                </tr>
+              <tr>
+                <th scope="row">Antecedente Procuraduria</th>
+                <td><input formControlName="ent_2" value="1" type="radio"></td>
+                <td><input formControlName="ent_2" value="2" type="radio"></td>
+                <td><input formControlName="ent_2" value="3" type="radio"></td>
+              </tr>
+              <tr>
+                <th scope="row">Antecedente Contraloria</th>
+                <td><input formControlName="ent_3" value="1" type="radio"></td>
+                <td><input formControlName="ent_3" value="2" type="radio"></td>
+                <td><input formControlName="ent_3" value="3" type="radio"></td>
+              </tr>
+              <tr>
+                <th scope="row">Antecedente Rama</th>
+                <td><input formControlName="ent_4" value="1" type="radio"></td>
+                <td><input formControlName="ent_4" value="2" type="radio"></td>
+                <td><input formControlName="ent_4" value="3" type="radio"></td>
+              </tr>
+              <tr>
+                <th scope="row">Antecedente Policia</th>
+                <td><input formControlName="ent_5" value="1" type="radio"></td>
+                <td><input formControlName="ent_5" value="2" type="radio"></td>
+                <td><input formControlName="ent_5" value="3" type="radio"></td>
+              </tr>
+              <tr>
+                <th scope="row">Antecedente Codigo</th>
+                <td><input formControlName="ent_6" value="1" type="radio"></td>
+                <td><input formControlName="ent_6" value="2" type="radio"></td>
+                <td><input formControlName="ent_6" value="3" type="radio"></td>
+              </tr>
+              <tr>
+                <th scope="row">Antecedente SISIP EC</th>
+                <td><input formControlName="ent_7" value="1" type="radio"></td>
+                <td><input formControlName="ent_7" value="2" type="radio"></td>
+                <td><input formControlName="ent_7" value="3" type="radio"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="mb-5">
+            <div class="row mb-4">
+              <div class="col-lg-3">
+                <label for="input-1"><strong>Fecha Libertad*</strong></label><br>
+                <input formControlName="fecha_libertad" type="date" id="input-1" name="trip-start">
+                
+                <div class="validacion">
+                  <span *ngIf="myForm.get('fecha_libertad').errors?.required && myForm.get('fecha_libertad').touched">
+                    Por favor seleccione una fecha
+                  </span>
+                </div>
+
+              </div>
+              <div class="col-lg-4 me-5">
+                <label for="input-2"><strong>Meses Condena*</strong></label><br>
+                <input formControlName="meses_condena" id="input-2" type="number">
+
+                <div class="validacion">
+                  <span *ngIf="myForm.get('meses_condena').errors?.required && myForm.get('meses_condena').touched">
+                    Este campo no puede estar vacio
+                  </span>
+                  <span *ngIf="this.myForm.controls['meses_condena'].errors && this.myForm.controls['meses_condena'].errors.max">
+                    Este campo debe contener maximo 10 caracteres
+                  </span>
+                </div>
+
+              </div>
+              <div class="col-lg-4">
+                <label for="input-3"><strong>Establecimiento*</strong></label><br>
+                <select formControlName="establecimiento" id="input-3">
+                  <option *ngFor="let establecimiento of establecimientos" [value]="establecimiento.value">
+                    {{establecimiento.tag}}
+                  </option>
+              </select>
+              <div class="validacion">
+                <span *ngIf="myForm.get('establecimiento').errors?.required && myForm.get('establecimiento').touched">
+                  Por favor seleccione un item
+                </span>
+              </div>
+                
+              </div>
+            </div>
+  
+            <div class="row mb-4">
+              <div class="col-lg-3">
+                <label for="input-4"><strong>Otro</strong></label><br>
+                <input formControlName="otro" id="input-4" type="text">                
+              </div>
+              <div class="col-lg-4 me-5">
+                <label for="input-5"><strong>Situación Juridica*</strong></label><br>
+                <select formControlName="situacion_juridica" id="input-5">
+                  <option *ngFor="let situacion of situaciones" [value]="situacion.value">
+                    {{situacion.tag}}
+                  </option>
+              </select>
+              <div class="validacion">
+                <span *ngIf="myForm.get('situacion_juridica').errors?.required && myForm.get('situacion_juridica').touched">
+                  Por favor seleccione un item
+                </span>
+              </div>
+  
+              </div>
+              <div class="col-lg-4">
+                <label for="input-6"><strong>Aprehendido Adolescente*</strong></label><br>
+                <select formControlName="apre_adol" id="input-6">
+                  <option *ngFor="let i of aprAdol" [value]="i.value">
+                    {{i.tag}}
+                  </option>
+              </select>
+              <div class="validacion">
+                <span *ngIf="myForm.get('apre_adol').errors?.required && myForm.get('apre_adol').touched">
+                  Por favor seleccione un item
+                </span>
+              </div>
+              
+                
+              </div>
+            </div>
+  
+            <div class="row mb-4">
+              <div class="col-lg-3">
+                <label for="input-7"><strong>Aprehendido Mayor*</strong></label><br>
+                <select formControlName="apre_may" id="input-7">
+                  <option *ngFor="let i of aprAdol" [value]="i.value">
+                    {{i.tag}}
+                  </option>
+              </select>
+              <div class="validacion">
+                <span *ngIf="myForm.get('apre_may').errors?.required && myForm.get('apre_may').touched">
+                  Por favor seleccione un item
+                </span>
+              </div>
+                
+              </div>
+              <div class="col-lg-4 me-5">
+                <label for="input-8"><strong>Delitos*</strong></label><br>
+                <ng-multiselect-dropdown formControlName="delitos" class="multiselect"
+              [placeholder]="'Puede seleccionar mas de un item'"
+              [settings]="dropdownSettings"
+              [data]="crimesList"
+              
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            >
+          </ng-multiselect-dropdown>
+                <div class="validacion">
+                  <span *ngIf="myForm.get('delitos').errors?.required && myForm.get('delitos').touched">
+                    Por favor seleccione un delito
+                  </span>
+                </div> 
+              </div>
+
+              <div class="col-lg-4">                
+                  <!-- <label class="me-2" for=""><strong>Otros Delitos</strong> </label><br> -->
+                  <button class="mb-2 btn btn-secondary" type="button" (click)="addDelitos()">Agregar delito</button>
+                  <div formArrayName="otros_delitos" *ngFor="let otros_delitos of otrosDelitos.controls; let i=index">
+                    <div [formGroupName]="i">
+                      <!-- <input formControlName="check_otro" type="checkbox"> <br>               -->
+                      <input formControlName="nuevo_delito" id="input-10" type="text">
+                    </div>
+                  </div>                
+                </div>             
+
+
+              <div class="col-lg-4">
+                <label><strong>Proceso Actual*</strong></label><br>
+                <label for="">Si</label>
+                <input class="me-3" formControlName="proceso_actual" value="T" type="radio">
+                <label for="">No</label>                
+                <input formControlName="proceso_actual" value="F" type="radio">  
+                <div class="validacion">
+                  <span *ngIf="myForm.get('proceso_actual').errors?.required && myForm.get('proceso_actual').touched">
+                    Por favor seleccione una opción
+                  </span>
+                </div>             
+              </div>
+
+            </div>
+          </div>
+          <div class="text-center">
+            <button mat-button matStepperPrevious>&#60;ANTERIOR</button>
+            <button [disabled]="myForm.invalid" (click)="Antecedentes()" mat-button matStepperNext>SIGUIENTE></button>
+          </div>
+        </form>
+
+        <pre>
+          {{myForm.value | json}}
+        </pre>
+      </mat-step>
+      
+      <mat-step label="Fill out your address">
+        <ng-template matStepLabel>Programa Casa Libertad</ng-template>
+        <form>          
+          <div class="text-center">
+            <button mat-button matStepperPrevious>&#60;ANTERIOR</button>
+            <button mat-button matStepperNext>SIGUIENTE></button>
+          </div>
+        </form>
+      </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Formatos</ng-template>
+      <p>You are now done.</p>
+      <div class="text-center">
+        <button mat-button matStepperPrevious>&#60;ANTERIOR</button>
+        <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+      </div>
+    </mat-step>
+
+  </mat-stepper>
+  

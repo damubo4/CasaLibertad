@@ -7,6 +7,8 @@ import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/rad
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -19,7 +21,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatRadioModule,
     MatSelectModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule,
+    MatDatepickerModule
   ],
 
   exports: [
@@ -28,7 +32,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatRadioModule,
     MatSelectModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatStepperModule,
+    MatDatepickerModule
   ],
 
   providers: [{

@@ -15,8 +15,7 @@ export class RecepcionService {
   
   addRecepcion(recepcion): Observable<any> {    
     var res = this.http.post(this.URL, recepcion);
-    return res;
-    
+    return res;    
   }
 
   getRecepcion(id,type): Observable<any> {    

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -24,7 +25,11 @@ import { AgendaComponent } from './components/agenda/agenda.component';
 import { ConsultaComponent } from './components/consulta/consulta.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
 
+import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
 
+const ngWizardConfig: NgWizardConfig = {
+  theme: THEME.default
+};
 
 @NgModule({
   declarations: [
@@ -52,7 +57,9 @@ import { ReportesComponent } from './components/reportes/reportes.component';
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgWizardModule.forRoot(ngWizardConfig), 
+    NgMultiSelectDropDownModule.forRoot ()   
   ],
   providers: [
 

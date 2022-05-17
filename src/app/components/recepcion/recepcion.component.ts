@@ -4,8 +4,6 @@ import { RecepcionService } from 'src/app/services/recepcion/recepcion.service';
 import { VariablesService } from 'src/app/services/variables/variables.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpErrorResponse } from '@angular/common/http';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -39,7 +37,7 @@ export class RecepcionComponent implements OnInit {
     otro: ['', [Validators.required, Validators.maxLength(20)]],
     cita_taller: [, [Validators.required]],
     canal_atencion: [, [Validators.required]]
-  });s
+  });
 
   tipoDocumento = [
     { value: 1, tag: 'Cedula de Ciudadania' },

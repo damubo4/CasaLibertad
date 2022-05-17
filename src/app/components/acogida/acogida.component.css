@@ -1,0 +1,25 @@
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+.mat-form-field {
+    margin-top: 16px;
+  }
+
+.mat-step-header {
+    background-color: aqua!important;
+  }
+
+h3 {
+  color: #a05959;
+  font-weight: 500;
+  }
+
+.validacion {
+  color: red;
+}
+
+.multiselect {
+  height: 200px;
+}
+
