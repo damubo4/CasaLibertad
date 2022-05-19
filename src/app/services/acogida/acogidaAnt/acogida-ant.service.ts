@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AcogidaAntService {
 
-  URL = 'URL'; 
-  url_crimes = "http://localhost:3000/crimenes"
+  URL = 'http://192.168.1.84:7001/user_records/records'; 
+  url_crimes = "http://192.168.1.84:7001/user_records/crimes"
 
   constructor(private http:HttpClient) { }
 

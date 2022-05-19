@@ -229,7 +229,8 @@ export class AcogidaComponent implements OnInit {
       "apprehended_adult": Number(this.myForm.get('apre_may').value),
       "crimes": tempArray,
       "other_crimes": tempArray2,    
-      "actual_process": this.myForm.get('proceso_actual').value
+      "actual_process": this.myForm.get('proceso_actual').value,
+      "user_uniqid": 121
     };
 
     this.acogidaService.addAntecedentes(ANTECEDENTES).subscribe(value => {

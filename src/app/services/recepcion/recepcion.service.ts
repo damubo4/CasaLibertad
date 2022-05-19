@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class RecepcionService {
 
-  URL = 'http://127.0.0.1:8080/api/reception/visitor';
+  URL = '	http://192.168.1.84:7001/casa-libertad/reception/visitor';
   
 
 
